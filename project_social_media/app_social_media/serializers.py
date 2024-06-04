@@ -7,6 +7,20 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(many=False)
     class Meta:
         model = Profile
-        fields = ['id', 'first_name', 'last_name']
+        fields = ['id', 'first_name', 'last_name', 'user']
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id', 'title', 'image', 'created_at']
+
+class MessageSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(many=False)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S EST")
+
+    class Meta:
+        model = Message
+        fields = ['id', 'author', 'created_at', 'content']

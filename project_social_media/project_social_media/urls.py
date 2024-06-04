@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app_social_media.views import *
+from django.conf import settings
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -27,5 +28,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/', get_profile),
     path('token/', TokenObtainPairView.as_view()),
-    path('refresh/', TokenRefreshView.as_view())
+    path('refresh/', TokenRefreshView.as_view()),
+    path('create-user/', create_user),
+    path('create-image/', create_image),
+    path('get-images/', get_images),
+    path('get-messages/', get_messages),
+    path('create-message/', create_message),
+    path('delete-message/', delete_message)
 ]
+
+if settings.DEBUG:
+  from django.conf.urls.static import static
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
