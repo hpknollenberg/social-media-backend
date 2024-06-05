@@ -84,6 +84,18 @@ def update_likes(request):
     return Response(likes_serialized.data)
 
 
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
+def update_profile_picture(request):
+   user = request.user
+   profile = user.profile
+   profile_picture = profile.profile_picture
+   image = request.data['image']
+   profile_picture.add(image)
+   profile_serialized = ProfileSerializer(profile)
+   return Response(profile_serialized.data)
+
 
 
 
