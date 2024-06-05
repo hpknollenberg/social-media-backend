@@ -74,13 +74,13 @@ def get_profile(request):
 def update_likes(request):
     user = request.user
     profile = user.profile
-    likes = profile.likes
-    like = Message.objects.get(id=request.data['id'])
-    if likes.exists(): 
-        likes.remove(like)
+    profile_likes = profile.likes
+    message = Message.objects.get(id=request.data['id'])
+    if message.likes.filter(id=profile.id).exists(): 
+        profile_likes.remove(message)
     else:
-        likes.add(like)
-    likes_serialized = MessageSerializer(likes, many=True)
+        profile_likes.add(message)
+    likes_serialized = MessageSerializer(profile_likes, many=True)
     return Response(likes_serialized.data)
 
 
