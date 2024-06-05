@@ -90,11 +90,10 @@ def update_likes(request):
 def update_profile_picture(request):
    user = request.user
    profile = user.profile
-   profile_picture = profile.profile_picture
-   image = request.data['image']
-   profile_picture.add(image)
-   profile_serialized = ProfileSerializer(profile)
-   return Response(profile_serialized.data)
+   profile.profile_picture = request.data['image']
+   profile.save(update_fields=['profile_picture'])
+   profile_update_serialized = ProfileSerializer(profile)
+   return Response(profile_update_serialized.data)
 
 
 

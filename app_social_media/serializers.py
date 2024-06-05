@@ -10,7 +10,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(many=False)
     class Meta:
         model = Profile
-        fields = ['id', 'first_name', 'last_name', 'image', 'user']
+        fields = ['id', 'first_name', 'last_name', 'profile_picture', 'user']
 
 class MessageSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(many=False)
