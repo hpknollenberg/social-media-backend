@@ -30,11 +30,10 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),
     path('refresh/', TokenRefreshView.as_view()),
     path('create-user/', create_user),
-    path('create-image/', create_image),
-    path('get-images/', get_images),
     path('get-messages/', get_messages),
     path('create-message/', create_message),
-    path('delete-message/', delete_message)
+    path('delete-message/', delete_message),
+    path('update-likes/', update_likes),
 ]
 
 if settings.DEBUG:
