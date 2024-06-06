@@ -35,7 +35,11 @@ urlpatterns = [
     path('delete-message/', delete_message),
     path('update-likes/', update_likes),
     path('profile-picture/', update_profile_picture),
-    path('other-profile/<int:pk>/', get_other_profile)
+    path('other-profile/<int:pk>/', get_other_profile),
+    path('create-comment/', create_comment),
+    path('get-comments/', get_comments),
+    path('delete-comment/', delete_comment),
+    path('update-comment-likes/', update_comment_likes)
 ]
 
 if settings.DEBUG:

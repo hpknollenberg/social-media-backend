@@ -14,6 +14,22 @@ from .serializers import *
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 @parser_classes([MultiPartParser, FormParser])
+def create_comment(request):
+  comment = Comment.objects.create(
+    author = Profile.objects.get(id=request.data['profile']),
+    content = request.data['content'],
+    image = request.data['image'],
+    message = Message.objects.get(id=request.data['message'])
+  )
+  comment_serialized = CommentSerializer(comment)
+  if comment_serialized.is_valid():
+    comment_serialized.save()
+  return Response(comment_serialized.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def create_message(request):
   message = Message.objects.create(
     author = Profile.objects.get(id=request.data['profile']),
@@ -46,11 +62,27 @@ def create_user(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
+def delete_comment(request):
+  comment = Comment.objects.get(id=request.data['id'])
+  comment.delete()
+  return Response()
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_message(request):
   message = Message.objects.get(id=request.data['id'])
   message.delete()
   return Response()
-  
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_comments(request):
+  comments = Comment.objects.all().order_by('-created_at')
+  comments_serialized = CommentSerializer(comments, many=True)
+  return Response(comments_serialized.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -75,6 +107,21 @@ def get_profile(request):
     profile = user.profile
     serializer = ProfileSerializer(profile, many=False)
     return Response(serializer.data)
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def update_comment_likes(request):
+    user = request.user
+    profile = user.profile
+    profile_likes = profile.likes_to_comment
+    comment = Comment.objects.get(id=request.data['id'])
+    if comment.likes.filter(id=profile.id).exists(): 
+        profile_likes.remove(comment)
+    else:
+        profile_likes.add(comment)
+    likes_serialized = CommentSerializer(profile_likes, many=True)
+    return Response(likes_serialized.data)
 
 
 @api_view(["PUT"])
