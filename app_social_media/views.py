@@ -62,6 +62,14 @@ def get_messages(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def get_other_profile(request, pk):
+  other_profile = Profile.objects.get(pk=pk)
+  other_profile_serialized = ProfileSerializer(other_profile, many=False)
+  return Response(other_profile_serialized.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_profile(request):
     user = request.user
     profile = user.profile
