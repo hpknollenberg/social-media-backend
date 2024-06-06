@@ -13,7 +13,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'profile_picture', 'user']
 
 class MessageSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(many=False)
+    author = ProfileSerializer(many=False, read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S UTC")
     likes_count = serializers.IntegerField(
         source='likes.count',
