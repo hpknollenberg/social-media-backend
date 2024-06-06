@@ -7,5 +7,9 @@ class ProfileAdmin(admin.ModelAdmin):
 class MessageAdmin(admin.ModelAdmin):
     pass
 
+class CommentAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Message, MessageAdmin)
+admin.site.register(Comment, CommentAdmin)
