@@ -34,7 +34,8 @@ urlpatterns = [
     path('create-message/', create_message),
     path('delete-message/', delete_message),
     path('update-likes/', update_likes),
-    path('profile-picture/', update_profile_picture)
+    path('profile-picture/', update_profile_picture),
+    path('other-profile/<int:pk>/', get_other_profile)
 ]
 
 if settings.DEBUG:
